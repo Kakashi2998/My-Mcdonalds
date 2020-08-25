@@ -8,7 +8,6 @@ class App extends React.Component{
   render(){
     return (
       <div className={classes.App}>
-        <h1>Hello</h1>
         <Layout>
           <BurgerBuilder/>
         </Layout>
