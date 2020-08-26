@@ -1,0 +1,18 @@
+.Button{
+    border: none;
+    text-align: center;
+    display: inline-block;
+    padding: 15px 32px;
+    font-size: 16px;
+    border-radius: 12px;
+    color: white;
+    margin: 10px;
+}
+
+.success{
+    background-color: #4CAF50;
+}
+
+.danger{
+    background-color: #f44336;
+}
