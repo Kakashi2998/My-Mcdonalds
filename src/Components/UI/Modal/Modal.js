@@ -1,20 +1,33 @@
 import React from 'react';
 import classes from './Modal.module.css'
-import Backdrop from '../Backdrop/Backdrop';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
+import { Backdrop, Button, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 
-export default props => {
+const Modal = props => {
+
+    const theme = createMuiTheme({
+        palette: {
+            primary: green,
+        },
+    });
+
     return(
         <div>
-            {props.show ? <Backdrop close={props.close}/> : null}
+            <Backdrop open={props.show} onClick={props.close} style={{zIndex: '100'}}/>
             <div className={classes.Modal} 
                 style={{transform: props.show? 'translateY(0)' : 'translateY(100vh)',
                     opacity: props.show? '1' : '0'}}>
                 {props.children}
-                <Button type='success'>Add to Order</Button>
-                <Button type='danger' click={props.close}>Cancel</Button>
+                <ThemeProvider theme={theme}>
+                    <Button variant='contained' color='primary' style={{margin: '10px'}}
+                    >Add to Order</Button>
+                </ThemeProvider>
+                <Button variant='contained' color='secondary' onClick={props.close}>Cancel</Button>
             </div>
         </div>
         
     );
 }
+
+export default Modal

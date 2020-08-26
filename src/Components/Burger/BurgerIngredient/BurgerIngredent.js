@@ -16,7 +16,6 @@ const BurgerIngredient = props => {
         );
         case('Meat'):return(
             <div className={classes.Meat}>
-                
             </div>
         );
         case('Cheese'):return(

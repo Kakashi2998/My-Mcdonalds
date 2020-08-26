@@ -1,5 +1,6 @@
 .BuildControls{
     background-color: orange;
+    height: 50vh;
     width: 100%;
     display: flex;
     margin: auto;

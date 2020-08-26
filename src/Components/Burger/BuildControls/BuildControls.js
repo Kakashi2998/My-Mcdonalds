@@ -2,7 +2,7 @@ import React from 'react';
 import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.module.css';
 
-export default props => {
+const BuildControls = props => {
     let BuildControls = props.ingredients.map((ingredient) => {
         return <BuildControl ingredient={ingredient} 
             addItem={props.addItem} removeItem={props.removeItem}
@@ -19,3 +19,5 @@ export default props => {
         )
     
 }
+
+export default BuildControls;

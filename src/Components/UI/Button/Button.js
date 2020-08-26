@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Button.module.css';
 
-export default props => {
+const Button = props => {
 
     let buttonClasses = [classes.Button, classes[props.type]];
 
@@ -11,3 +11,5 @@ export default props => {
         </button>
     );
 }
+
+export default Button;

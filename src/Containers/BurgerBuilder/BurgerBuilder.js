@@ -67,17 +67,17 @@ export default class BurgerBuilder extends React.Component{
 
     render(){
         return(
-            <div>
-                <Modal show={this.state.showModal} close={this.toggleModal}>
-                    <BurgerSummary ingredients={this.state.ingredients}
-                    price={this.state.price}/>
-                </Modal>
+            <div style={{marginTop: '50px'}}>
                 <Burger ingredients={this.state.ingredients}
                     isOrderable={this.state.isOrderable}/>
                 <BuildControls ingredients={this.state.ingredients}
-                   addItem={this.addItem} removeItem={this.removeItem} 
-                   price={this.state.price} isOrderable = {this.state.isOrderable}
-                   addToOrders={this.toggleModal}/>
+                    addItem={this.addItem} removeItem={this.removeItem} 
+                    price={this.state.price} isOrderable = {this.state.isOrderable}
+                    addToOrders={this.toggleModal}/>
+                <Modal show={this.state.showModal} close={this.toggleModal}>
+                    <BurgerSummary ingredients={this.state.ingredients}
+                            price={this.state.price}/>
+                </Modal>
             </div>
         );
     }

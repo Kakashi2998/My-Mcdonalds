@@ -1,0 +1,10 @@
+
+.menuButton{
+    margin-right: 0;
+}
+.title{
+    flex-grow: 1;
+}
+.AppBar{
+    background-color: #00c853;
+}
