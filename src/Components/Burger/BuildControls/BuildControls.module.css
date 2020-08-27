@@ -1,6 +1,6 @@
 .BuildControls{
     background-color: orange;
-    height: 50vh;
+    height: 60vh;
     width: 100%;
     display: flex;
     margin: auto;
@@ -9,6 +9,7 @@
     flex-flow: column;
     box-shadow: 0 2px 2px #ccc;
 }
+
 
 .OrderButton {
     background-color: #DAD735;

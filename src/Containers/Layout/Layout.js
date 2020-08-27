@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Layout.module.css'
-import Toolbar from '../AppToolbar/AppToolbar';
-import AppDrawer from '../UI/AppDrawer/AppDrawer';
+import Toolbar from '../../Components/AppToolbar/AppToolbar';
+import AppDrawer from '../../Components/AppDrawer/AppDrawer';
 
 const Layout = props => {
 

@@ -1,16 +1,17 @@
 import React from 'react';
 import classes from './Modal.module.css'
-// import Button from '../Button/Button';
 import { Backdrop, Button, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { green, red } from '@material-ui/core/colors';
 
 const Modal = props => {
 
-    const theme = createMuiTheme({
+    const AddToOrdertheme = createMuiTheme({
         palette: {
             primary: green,
+            secondary: red
         },
     });
+    
 
     return(
         <div>
@@ -19,11 +20,12 @@ const Modal = props => {
                 style={{transform: props.show? 'translateY(0)' : 'translateY(100vh)',
                     opacity: props.show? '1' : '0'}}>
                 {props.children}
-                <ThemeProvider theme={theme}>
-                    <Button variant='contained' color='primary' style={{margin: '10px'}}
-                    >Add to Order</Button>
+                <ThemeProvider theme={AddToOrdertheme}>
+                    <Button variant='contained' color='primary' style={{margin: '10px', color: 'white'}}>
+                        Add to Order</Button>
+                    <Button variant='contained' color='secondary' onClick={props.close}>
+                       Cancel</Button>
                 </ThemeProvider>
-                <Button variant='contained' color='secondary' onClick={props.close}>Cancel</Button>
             </div>
         </div>
         

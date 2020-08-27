@@ -4,6 +4,8 @@
 }
 .title{
     flex-grow: 1;
+    justify-content: center;
+    display: flex;
 }
 .AppBar{
     background-color: #00c853;

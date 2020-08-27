@@ -2,7 +2,11 @@ import React from 'react';
 
 const BurgerSummary = props => {
 
-    let items = props.ingredients.filter(i => i.qty > 0)
+    let items = null;
+
+    if(props.show){
+        console.log('component updated')
+        items = props.ingredients.filter(i => i.qty > 0)
         .map(ingredient => {
             return(    
             <li key={ingredient.id}>
@@ -12,6 +16,7 @@ const BurgerSummary = props => {
             </li>
             );
         });
+    }
     
     return(
         <div>

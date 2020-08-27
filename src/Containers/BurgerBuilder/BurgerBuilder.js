@@ -67,7 +67,7 @@ export default class BurgerBuilder extends React.Component{
 
     render(){
         return(
-            <div style={{marginTop: '50px'}}>
+            <div style={{marginTop: '100px'}}>
                 <Burger ingredients={this.state.ingredients}
                     isOrderable={this.state.isOrderable}/>
                 <BuildControls ingredients={this.state.ingredients}
@@ -76,7 +76,7 @@ export default class BurgerBuilder extends React.Component{
                     addToOrders={this.toggleModal}/>
                 <Modal show={this.state.showModal} close={this.toggleModal}>
                     <BurgerSummary ingredients={this.state.ingredients}
-                            price={this.state.price}/>
+                            price={this.state.price} show={this.state.showModal}/>
                 </Modal>
             </div>
         );
