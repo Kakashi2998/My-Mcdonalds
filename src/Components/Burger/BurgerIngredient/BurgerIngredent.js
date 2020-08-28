@@ -14,8 +14,8 @@ const BurgerIngredient = props => {
                     <div className={classes.Seeds2}/>
                 </div>
         );
-        case('Meat'):return(
-            <div className={classes.Meat}>
+        case('Chicken'):return(
+            <div className={classes.Chicken}>
             </div>
         );
         case('Cheese'):return(
@@ -24,8 +24,11 @@ const BurgerIngredient = props => {
         case('Salad'):return(
             <div className={classes.Salad}></div>
         );
-        case('Bacon'):return(
-            <div className={classes.Bacon}></div>
+        case('Sauce'):return(
+            <div className={classes.Sauce}></div>
+        );
+        case('Aloo-Tikki'):return(
+            <div className={classes.AlooTikki}></div>
         );
         default: return null;
     }

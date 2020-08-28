@@ -10,9 +10,10 @@ export default class BurgerBuilder extends React.Component{
         ingredients:  
         [
             {id: 1, type: 'Salad', qty: 0, price: 35},
-            {id: 2, type: 'Cheese', qty: 0, price: 40},
-            {id: 3, type: 'Bacon', qty: 0, price: 42},
-            {id: 4, type: 'Meat', qty: 0, price: 60}
+            {id: 2, type: 'Sauce', qty: 0, price: 42},
+            {id: 3, type: 'Cheese', qty: 0, price: 40},
+            {id: 4, type: 'Chicken', qty: 0, price: 60},
+            {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
         ],
         price: 30,
         isOrderable: false,
@@ -63,7 +64,6 @@ export default class BurgerBuilder extends React.Component{
     toggleModal = () => {
        this.setState((prevState) =>({showModal: !prevState.showModal}))
     }
-
 
     render(){
         return(

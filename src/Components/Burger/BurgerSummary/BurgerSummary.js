@@ -5,7 +5,6 @@ const BurgerSummary = props => {
     let items = null;
 
     if(props.show){
-        console.log('component updated')
         items = props.ingredients.filter(i => i.qty > 0)
         .map(ingredient => {
             return(    
