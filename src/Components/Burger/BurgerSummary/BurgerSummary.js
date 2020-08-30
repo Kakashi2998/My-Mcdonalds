@@ -1,4 +1,5 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
 
 const BurgerSummary = props => {
 
@@ -19,6 +20,9 @@ const BurgerSummary = props => {
     
     return(
         <div>
+            <TextField id="outlined-basic" label="Burger Name" variant="outlined"
+                onChange={props.setBurgerName} required onClick={(event) => event.target.select()}
+                value={props.burgerName}/>
             <h1>Add burger to Orders?</h1>
             <ul>{items}</ul>
             <h2>Total price: Rs.{props.price}</h2>

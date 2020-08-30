@@ -4,6 +4,7 @@ import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import Modal from '../../Components/UI/Modal/Modal';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
 import AxiosInstance from '../../AxiosInstance';
+import { CircularProgress } from '@material-ui/core';
 
 export default class BurgerBuilder extends React.Component{
 
@@ -16,9 +17,11 @@ export default class BurgerBuilder extends React.Component{
             {id: 4, type: 'Chicken', qty: 0, price: 60},
             {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
         ],
+        burgerName: "New Burger",
         price: 30,
         isOrderable: false,
-        showModal: false
+        showModal: false,
+        loading: false
     }
 
     modal = null;
@@ -66,7 +69,15 @@ export default class BurgerBuilder extends React.Component{
        this.setState((prevState) =>({showModal: !prevState.showModal}))
     }
 
+    setBurgerName = (event) => {
+        this.setState({burgerName: event.target.value})
+    }
+
     order = () => {
+        if(this.state.loading){
+            return;
+        }
+        this.setState({loading: true})
         const date = new Date();
         const order = {
             address: "C-210, Arun Patios",
@@ -75,7 +86,7 @@ export default class BurgerBuilder extends React.Component{
             delivered: 0,
             orderedBurgers: [
                 {
-                    name: "Apoorv's burger",
+                    name: this.state.burgerName,
                     salad: this.state.ingredients[0].qty,
                     cheese: this.state.ingredients[1].qty,
                     sauce: this.state.ingredients[2].qty,
@@ -87,7 +98,6 @@ export default class BurgerBuilder extends React.Component{
         }
         AxiosInstance.post("orders/123123/order", order)
             .then(response => {
-                alert("Ordered Successfully!")
                 this.setState({
                     ingredients:  
                     [
@@ -97,14 +107,27 @@ export default class BurgerBuilder extends React.Component{
                         {id: 4, type: 'Chicken', qty: 0, price: 60},
                         {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
                     ],
+                    burgerName: "New Burger",
                     price: 30,
                     isOrderable: false,
-                    showModal: false
+                    showModal: false,
+                    loading: false
                 })
+                setTimeout(() => alert("Ordered Successfully!"), 500);
+            }, error => {
+                alert("Network Error")
+                this.setState({loading: false})
             });
     }
 
     render(){
+        let orderSummary = <BurgerSummary ingredients={this.state.ingredients}
+                            price={this.state.price} show={this.state.showModal} 
+                            setBurgerName={this.setBurgerName} burgerName={this.state.burgerName}/>
+
+        if(this.state.loading){
+            orderSummary = <CircularProgress />
+        }
         return(
             <div style={{marginTop: '100px'}}>
                 <Burger ingredients={this.state.ingredients}
@@ -115,8 +138,7 @@ export default class BurgerBuilder extends React.Component{
                     addToOrders={this.toggleModal}/>
                 <Modal show={this.state.showModal} close={this.toggleModal}
                     order={this.order}>
-                    <BurgerSummary ingredients={this.state.ingredients}
-                            price={this.state.price} show={this.state.showModal}/>
+                    {orderSummary}
                 </Modal>
             </div>
         );
