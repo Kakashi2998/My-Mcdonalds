@@ -3,6 +3,7 @@ import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import Modal from '../../Components/UI/Modal/Modal';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
+import AxiosInstance from '../../AxiosInstance';
 
 export default class BurgerBuilder extends React.Component{
 
@@ -65,6 +66,44 @@ export default class BurgerBuilder extends React.Component{
        this.setState((prevState) =>({showModal: !prevState.showModal}))
     }
 
+    order = () => {
+        const date = new Date();
+        const order = {
+            address: "C-210, Arun Patios",
+            orderDate: date.toISOString(),
+            totalPrice: this.state.price,
+            delivered: 0,
+            orderedBurgers: [
+                {
+                    name: "Apoorv's burger",
+                    salad: this.state.ingredients[0].qty,
+                    cheese: this.state.ingredients[1].qty,
+                    sauce: this.state.ingredients[2].qty,
+                    chicken: this.state.ingredients[3].qty,
+                    alootikki: this.state.ingredients[4].qty,
+                    price: this.state.price
+                }
+            ]
+        }
+        AxiosInstance.post("orders/123123/order", order)
+            .then(response => {
+                alert("Ordered Successfully!")
+                this.setState({
+                    ingredients:  
+                    [
+                        {id: 1, type: 'Salad', qty: 0, price: 35},
+                        {id: 2, type: 'Sauce', qty: 0, price: 42},
+                        {id: 3, type: 'Cheese', qty: 0, price: 40},
+                        {id: 4, type: 'Chicken', qty: 0, price: 60},
+                        {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
+                    ],
+                    price: 30,
+                    isOrderable: false,
+                    showModal: false
+                })
+            });
+    }
+
     render(){
         return(
             <div style={{marginTop: '100px'}}>
@@ -74,7 +113,8 @@ export default class BurgerBuilder extends React.Component{
                     addItem={this.addItem} removeItem={this.removeItem} 
                     price={this.state.price} isOrderable = {this.state.isOrderable}
                     addToOrders={this.toggleModal}/>
-                <Modal show={this.state.showModal} close={this.toggleModal}>
+                <Modal show={this.state.showModal} close={this.toggleModal}
+                    order={this.order}>
                     <BurgerSummary ingredients={this.state.ingredients}
                             price={this.state.price} show={this.state.showModal}/>
                 </Modal>

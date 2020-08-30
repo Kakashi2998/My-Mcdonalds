@@ -21,7 +21,8 @@ const Modal = props => {
                     opacity: props.show? '1' : '0'}}>
                 {props.children}
                 <ThemeProvider theme={AddToOrdertheme}>
-                    <Button variant='contained' color='primary' style={{margin: '10px', color: 'white'}}>
+                    <Button variant='contained' color='primary' style={{margin: '10px', color: 'white'}}
+                        onClick={props.order}>
                         Add to Order</Button>
                     <Button variant='contained' color='secondary' onClick={props.close}>
                        Cancel</Button>
