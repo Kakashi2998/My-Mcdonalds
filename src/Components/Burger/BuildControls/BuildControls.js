@@ -11,10 +11,10 @@ const BuildControls = props => {
             <div className={classes.BuildControls}>
                 {BuildControls}
                 <div style={{fontWeight:'bold', color:'green'}}>Price: Rs{props.price}</div>
-                <button className={classes.OrderButton} disabled={!props.isOrderable}
+                {/* <button className={classes.OrderButton} disabled={!props.isOrderable}
                     onClick={props.addToOrders}>
                     Add to Orders
-                </button>
+                </button> */}
             </div>
         )
     

@@ -1,34 +1,50 @@
 import React from 'react';
-import classes from './BurgerIngredent.module.css'
 import Proptypes from 'prop-types';
+import salad from '../../../Assets/Images/Ingredients-images/salad.jpg';
+import alooTikki from '../../../Assets/Images/Ingredients-images/aloo-tikki.jpg';
+import sauce from '../../../Assets/Images/Ingredients-images/sauce.jpg';
+import chicken from '../../../Assets/Images/Ingredients-images/chicken.jpg';
+import breadBottom from '../../../Assets/Images/Ingredients-images/bread-bottom.jpg';
+import breadTop from '../../../Assets/Images/Ingredients-images/bread-top.jpg';
+import cheese from '../../../Assets/Images/Ingredients-images/cheese.jpg';
+
 
 const BurgerIngredient = props => {
 
     switch(props.type){
         case('BreadBottom'):return(
-                <div className={classes.BreadBottom}></div>
+                <div>
+                    <img src={breadBottom} alt='not found'/>
+                </div>
         );
         case('BreadTop'): return(
-                <div className={classes.BreadTop}>
-                    <div className={classes.Seeds1}/>
-                    <div className={classes.Seeds2}/>
+                <div>
+
+                    <img src={breadTop} alt='not found'/>
                 </div>
         );
         case('Chicken'):return(
-            <div className={classes.Chicken}>
+            <div>
+                <img src={chicken} alt='not found'/>
             </div>
         );
         case('Cheese'):return(
-            <div className={classes.Cheese}></div>
+            <img src={cheese} alt='not found'/>
         );
         case('Salad'):return(
-            <div className={classes.Salad}></div>
+            <div >
+             <img src={salad} alt='not found'/>
+            </div>
         );
         case('Sauce'):return(
-            <div className={classes.Sauce}></div>
+            <div>
+                <img src={sauce} alt='not found'/>
+            </div>
         );
         case('Aloo-Tikki'):return(
-            <div className={classes.AlooTikki}></div>
+            <div>
+             <img src={alooTikki} alt='not found'/>
+            </div>
         );
         default: return null;
     }

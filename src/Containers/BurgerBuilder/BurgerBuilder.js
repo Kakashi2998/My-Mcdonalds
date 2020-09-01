@@ -4,7 +4,8 @@ import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import Modal from '../../Components/UI/Modal/Modal';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
 import AxiosInstance from '../../AxiosInstance';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Button, Drawer } from '@material-ui/core';
+import classes from './BurgerBuilder.module.css'
 
 export default class BurgerBuilder extends React.Component{
 
@@ -21,10 +22,13 @@ export default class BurgerBuilder extends React.Component{
         price: 30,
         isOrderable: false,
         showModal: false,
-        loading: false
+        loading: false,
+        bottomDrawer: false,
     }
 
     modal = null;
+
+    
 
     addItem = (id) =>{
         let tempIngredients = [...this.state.ingredients];
@@ -71,6 +75,10 @@ export default class BurgerBuilder extends React.Component{
 
     setBurgerName = (event) => {
         this.setState({burgerName: event.target.value})
+    }
+
+    toggleBottomDrawer = () => {
+        this.setState({bottomDrawer: !this.state.bottomDrawer});
     }
 
     order = () => {
@@ -120,6 +128,8 @@ export default class BurgerBuilder extends React.Component{
             });
     }
 
+   
+
     render(){
         let orderSummary = <BurgerSummary ingredients={this.state.ingredients}
                             price={this.state.price} show={this.state.showModal} 
@@ -132,10 +142,21 @@ export default class BurgerBuilder extends React.Component{
             <div style={{marginTop: '100px'}}>
                 <Burger ingredients={this.state.ingredients}
                     isOrderable={this.state.isOrderable}/>
-                <BuildControls ingredients={this.state.ingredients}
+                <Button onClick={this.toggleBottomDrawer} variant='contained' color='primary' 
+                    style={{color: 'white', width: '200px'}}>
+                    Ingredients
+                </Button><br/><br/>
+                <button className={classes.OrderButton} disabled={!this.state.isOrderable}
+                    onClick={this.toggleModal}>
+                    Add to Orders
+                </button>
+                <Drawer anchor='bottom' open={this.state.bottomDrawer} onClose={this.toggleBottomDrawer}>
+                    <BuildControls ingredients={this.state.ingredients}
                     addItem={this.addItem} removeItem={this.removeItem} 
                     price={this.state.price} isOrderable = {this.state.isOrderable}
                     addToOrders={this.toggleModal}/>
+                </Drawer>
+               
                 <Modal show={this.state.showModal} close={this.toggleModal}
                     order={this.order}>
                     {orderSummary}
