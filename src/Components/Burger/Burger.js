@@ -8,11 +8,11 @@ const Burger = props => {
 
     if(props.isOrderable){
         ingredientsArr = [];
-        props.ingredients.map(ingredient => {
+        props.ingredients.map((ingredient, index) => {
             for(let i=0; i<ingredient.qty; i++){
                 ingredientsArr.push(
-                    <BurgerIngredient type={ingredient.type} 
-                    key={ingredient.type + (i+1)}/>);
+                        <BurgerIngredient type={ingredient.type} 
+                            key={ingredient.type + (i+1)} index={index + i}/>);
             }
             return ingredientsArr;
         })

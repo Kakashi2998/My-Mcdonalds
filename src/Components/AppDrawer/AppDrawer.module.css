@@ -6,3 +6,8 @@
     font-weight: bold;
     margin-top: 50px;
 }
+
+.ListButtons{
+    text-decoration: none;
+    color: white;
+}

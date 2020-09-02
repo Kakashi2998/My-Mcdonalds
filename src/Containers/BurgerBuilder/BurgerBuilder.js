@@ -1,10 +1,8 @@
 import React from 'react';
 import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
-import Modal from '../../Components/UI/Modal/Modal';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
-import AxiosInstance from '../../AxiosInstance';
-import { CircularProgress, Button, Drawer } from '@material-ui/core';
+import { Button, Drawer, Modal } from '@material-ui/core';
 import classes from './BurgerBuilder.module.css'
 
 export default class BurgerBuilder extends React.Component{
@@ -15,8 +13,14 @@ export default class BurgerBuilder extends React.Component{
             {id: 1, type: 'Salad', qty: 0, price: 35},
             {id: 2, type: 'Sauce', qty: 0, price: 42},
             {id: 3, type: 'Cheese', qty: 0, price: 40},
-            {id: 4, type: 'Chicken', qty: 0, price: 60},
-            {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
+            {id: 4, type: 'Mayonaise', qty: 0, price: 35},
+            {id: 5, type: 'Onions', qty: 0, price: 35},
+            {id: 6, type: 'Tomatoes', qty: 0, price: 35},
+            {id: 7, type: 'Mushrooms', qty: 0, price: 35},
+            {id: 8, type: 'Egg', qty: 0, price: 35},
+            {id: 9, type: 'Aloo-Tikki', qty: 0, price: 35},
+            {id: 10, type: 'Chicken', qty: 0, price: 60},
+
         ],
         burgerName: "New Burger",
         price: 30,
@@ -26,9 +30,6 @@ export default class BurgerBuilder extends React.Component{
         bottomDrawer: false,
     }
 
-    modal = null;
-
-    
 
     addItem = (id) =>{
         let tempIngredients = [...this.state.ingredients];
@@ -81,63 +82,12 @@ export default class BurgerBuilder extends React.Component{
         this.setState({bottomDrawer: !this.state.bottomDrawer});
     }
 
-    order = () => {
-        if(this.state.loading){
-            return;
-        }
-        this.setState({loading: true})
-        const date = new Date();
-        const order = {
-            address: "C-210, Arun Patios",
-            orderDate: date.toISOString(),
-            totalPrice: this.state.price,
-            delivered: 0,
-            orderedBurgers: [
-                {
-                    name: this.state.burgerName,
-                    salad: this.state.ingredients[0].qty,
-                    cheese: this.state.ingredients[1].qty,
-                    sauce: this.state.ingredients[2].qty,
-                    chicken: this.state.ingredients[3].qty,
-                    alootikki: this.state.ingredients[4].qty,
-                    price: this.state.price
-                }
-            ]
-        }
-        AxiosInstance.post("orders/123123/order", order)
-            .then(response => {
-                this.setState({
-                    ingredients:  
-                    [
-                        {id: 1, type: 'Salad', qty: 0, price: 35},
-                        {id: 2, type: 'Sauce', qty: 0, price: 42},
-                        {id: 3, type: 'Cheese', qty: 0, price: 40},
-                        {id: 4, type: 'Chicken', qty: 0, price: 60},
-                        {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
-                    ],
-                    burgerName: "New Burger",
-                    price: 30,
-                    isOrderable: false,
-                    showModal: false,
-                    loading: false
-                })
-                setTimeout(() => alert("Ordered Successfully!"), 500);
-            }, error => {
-                alert("Network Error")
-                this.setState({loading: false})
-            });
+    addToCart = () => {
+        this.props.addToCart(this.state.burgerName, this.state.ingredients, this.state.price);
+        this.props.history.push('/cart');
     }
 
-   
-
     render(){
-        let orderSummary = <BurgerSummary ingredients={this.state.ingredients}
-                            price={this.state.price} show={this.state.showModal} 
-                            setBurgerName={this.setBurgerName} burgerName={this.state.burgerName}/>
-
-        if(this.state.loading){
-            orderSummary = <CircularProgress />
-        }
         return(
             <div style={{marginTop: '100px'}}>
                 <Burger ingredients={this.state.ingredients}
@@ -148,19 +98,24 @@ export default class BurgerBuilder extends React.Component{
                 </Button><br/><br/>
                 <button className={classes.OrderButton} disabled={!this.state.isOrderable}
                     onClick={this.toggleModal}>
-                    Add to Orders
+                    Add to Cart
                 </button>
-                <Drawer anchor='bottom' open={this.state.bottomDrawer} onClose={this.toggleBottomDrawer}>
+                <Drawer anchor='bottom' open={this.state.bottomDrawer} onClose={this.toggleBottomDrawer} BackdropProps={{invisible: true}}>
                     <BuildControls ingredients={this.state.ingredients}
                     addItem={this.addItem} removeItem={this.removeItem} 
                     price={this.state.price} isOrderable = {this.state.isOrderable}
                     addToOrders={this.toggleModal}/>
                 </Drawer>
                
-                <Modal show={this.state.showModal} close={this.toggleModal}
-                    order={this.order}>
-                    {orderSummary}
-                </Modal>
+                    <Modal open={this.state.showModal} onClose={this.toggleModal} >
+                        <React.Fragment>
+                            <BurgerSummary ingredients={this.state.ingredients}
+                                    price={this.state.price} close={this.toggleModal} 
+                                    setBurgerName={this.setBurgerName} burgerName={this.state.burgerName}
+                                    addToCart={this.addToCart}/>
+
+                        </React.Fragment>
+                    </Modal>
             </div>
         );
     }
