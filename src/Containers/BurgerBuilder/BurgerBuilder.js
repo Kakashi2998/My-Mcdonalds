@@ -12,8 +12,8 @@ export default class BurgerBuilder extends React.Component{
         [
             {id: 1, type: 'Salad', qty: 0, price: 35},
             {id: 2, type: 'Sauce', qty: 0, price: 42},
-            {id: 3, type: 'Cheese', qty: 0, price: 40},
-            {id: 4, type: 'Mayonaise', qty: 0, price: 35},
+            {id: 3, type: 'Mayonaise', qty: 0, price: 35},
+            {id: 4, type: 'Cheese', qty: 0, price: 40},
             {id: 5, type: 'Onions', qty: 0, price: 35},
             {id: 6, type: 'Tomatoes', qty: 0, price: 35},
             {id: 7, type: 'Mushrooms', qty: 0, price: 35},

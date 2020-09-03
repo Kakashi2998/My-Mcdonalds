@@ -27,9 +27,12 @@ class Cart extends React.Component{
                 {burgers}
                 <h2>Total Price: Rs{this.state.totalPrice}</h2>
                 <Button onClick={() => this.props.history.push('/burgerBuilder')}
-                    variant='contained' style={{backgroundColor: 'green', color: 'white'}}>
+                    variant='contained' color='primary'>
                     Add Burger
                 </Button>
+                <Button variant='contained' color='default' style={{backgroundColor: 'green', color: 'white'}}>
+                    Order
+                </Button> 
             </div>
         );
     }
@@ -81,7 +84,6 @@ class Cart extends React.Component{
     //         });
     // }
 
-    
 }
 
 export default Cart;
