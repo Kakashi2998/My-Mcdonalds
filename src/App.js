@@ -8,18 +8,13 @@ import Orders from './Containers/Orders/Orders';
 
 class App extends React.Component{
 
-  state = {
-    cart: [],
-    index: 0
-  }
-
   render(){
     return (
       <div className={classes.App}>
         <Layout>
           <Switch>
-            <Route path='/burgerBuilder' render={(props) => <BurgerBuilder addToCart={this.addToCart} {...props}/> }/>
-            <Route path='/cart' render={(props) => <Cart cart={this.state.cart} onDelete={this.onDelete} {...props}/>}/>
+            <Route path='/burgerBuilder' render={(props) => <BurgerBuilder {...props}/> }/>
+            <Route path='/cart' render={(props) => <Cart  {...props}/>}/>
             <Route path='/orders' component={Orders}/>
             <Redirect from='/' to='/burgerBuilder'/>
           </Switch>
@@ -29,20 +24,20 @@ class App extends React.Component{
   }
 
 
-  addToCart = (name, ingredients, price) => {
-    const tempCart = this.state.cart;
-    tempCart.push({name: name, ingredients: [...ingredients], price: price, id: this.state.index})
-    this.setState({cart: tempCart, index: this.state.index+1});
-  }
+  // addToCart = (name, ingredients, price) => {
+  //   const tempCart = this.state.cart;
+  //   tempCart.push({name: name, ingredients: [...ingredients], price: price, id: this.state.index})
+  //   this.setState({cart: tempCart, index: this.state.index+1});
+  // }
 
-  onDelete = (id) => {
-    if(window.confirm('Delete burger from Cart?')){
-    const tempCart = this.state.cart;
-    const index = tempCart.findIndex(burger => burger.id === id);
-    tempCart.splice(index,1);
-    this.setState({cart: tempCart});
-    }
-  }
+  // onDelete = (id) => {
+  //   if(window.confirm('Delete burger from Cart?')){
+  //   const tempCart = this.state.cart;
+  //   const index = tempCart.findIndex(burger => burger.id === id);
+  //   tempCart.splice(index,1);
+  //   this.setState({cart: tempCart});
+  //   }
+  // }
 
   // order = () => {
   //       // this.setState({loading: true})

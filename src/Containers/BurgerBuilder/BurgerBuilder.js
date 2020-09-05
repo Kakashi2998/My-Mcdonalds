@@ -4,8 +4,10 @@ import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
 import { Button, Drawer, Modal } from '@material-ui/core';
 import classes from './BurgerBuilder.module.css'
+import { connect } from 'react-redux';
+import { ADD_TO_CART } from '../../Store/Actions';
 
-export default class BurgerBuilder extends React.Component{
+class BurgerBuilder extends React.Component{
 
     state = {
         ingredients:  
@@ -45,8 +47,7 @@ export default class BurgerBuilder extends React.Component{
         let tempIngredients = [...this.state.ingredients];
         const index = tempIngredients
             .findIndex(ingredient => ingredient.id === id);
-        tempIngredients[index].qty = 
-                tempIngredients[index].qty === 0 ? 0 : tempIngredients[index].qty-1;
+        tempIngredients[index].qty--;
         this.setState({ingredients: tempIngredients});
         this.isOrderable();
         this.updatePrice();
@@ -65,6 +66,7 @@ export default class BurgerBuilder extends React.Component{
         this.state.ingredients.forEach(ingredient => {
             if(ingredient.qty > 0){
                 isOrderable = true;
+                return;
             }
         })
         this.setState({isOrderable: isOrderable});
@@ -113,10 +115,24 @@ export default class BurgerBuilder extends React.Component{
                                     price={this.state.price} close={this.toggleModal} 
                                     setBurgerName={this.setBurgerName} burgerName={this.state.burgerName}
                                     addToCart={this.addToCart}/>
-
                         </React.Fragment>
                     </Modal>
             </div>
         );
     }
 }
+
+const stateToProps = state => {
+    return{
+        cart: state.cart
+    }
+}
+
+const dispatchToProps = dispatch => {
+    return{
+        addToCart: (name, ingredients, price) => dispatch({type: ADD_TO_CART, name: name, ingredients: ingredients,
+            price: price })
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(BurgerBuilder);

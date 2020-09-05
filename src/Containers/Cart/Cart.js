@@ -2,30 +2,17 @@ import React from 'react';
 import CartItem from './CartItem/CartItem';
 import { Button } from '@material-ui/core';
 import classes from './Cart.module.css';
+import { connect } from 'react-redux';
 
 class Cart extends React.Component{
 
-    state = {
-        burgers: [],
-        totalPrice: 0,
-    }
-
-    componentDidMount(){
-        this.props.cart.map(burger => 
-            this.setState(prevState => ({totalPrice: prevState.totalPrice + burger.price}))
-        );
-    }
-
     render(){
-        const burgers = [];
-        this.props.cart.map(burger => 
-            burgers.push(<CartItem burger={burger} key={burger.id} onDelete={this.props.onDelete}/>)
-        );
-
         return (
             <div className={classes.Cart}>
-                {burgers}
-                <h2>Total Price: Rs{this.state.totalPrice}</h2>
+                {this.props.cart.map(burger => 
+                    <CartItem burger={burger} key={burger.id}/>)
+                }
+                <h2>Total Price: Rs{this.props.totalPrice}</h2>
                 <Button onClick={() => this.props.history.push('/burgerBuilder')}
                     variant='contained' color='primary'>
                     Add Burger
@@ -86,4 +73,11 @@ class Cart extends React.Component{
 
 }
 
-export default Cart;
+const stateToProps = state => {
+    return{
+        cart: state.cart,
+        totalPrice: state.totalPrice
+    }
+}
+
+export default connect(stateToProps)(Cart);

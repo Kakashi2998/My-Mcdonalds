@@ -1,5 +1,5 @@
 import React from 'react';
-import {SwipeableDrawer, List, ListItem, ListItemText, Divider, createMuiTheme, MenuItem } from '@material-ui/core';
+import {SwipeableDrawer, List, ListItemText, Divider, MenuItem } from '@material-ui/core';
 import classes from './AppDrawer.module.css';
 import { Link } from 'react-router-dom';
 
