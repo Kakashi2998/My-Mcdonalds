@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import { DELETE_FROM_CART } from '../../../Store/Actions';
+import { deleteFromCart } from '../../../Store/Actions/CartActions';
 import { connect } from 'react-redux';
 
 const CartItem = props => {
@@ -10,14 +10,15 @@ const CartItem = props => {
             props.deleteFromCart(props.burger.id)
         }
     }
+
+    
     return(
         <div>
             <h2>{props.burger.name}</h2>
-            {props.burger.ingredients.filter(i => i.qty > 0).map(ingredient => 
-                <li key={ingredient.id}>
-                    <b>{ingredient.type}</b>
-                    Qty: {ingredient.qty}
-                    Price: {ingredient.price * ingredient.qty}
+            {props.burger.ingredients.filter(ingredient => Object.values(ingredient) > 0)
+                .map(ingredient => 
+                <li key={Object.keys(ingredient)}>
+                    <b>{Object.keys(ingredient)} = {Object.values(ingredient)}</b>
                 </li>
             )}
             <h3>Price: Rs{props.burger.price}</h3>
@@ -30,7 +31,7 @@ const CartItem = props => {
 
 const dispatchToProps = dispatch => {
     return{
-        deleteFromCart: (id) => dispatch({type: DELETE_FROM_CART, id: id})
+        deleteFromCart: (id) => dispatch(deleteFromCart(id))
     }
 }
 

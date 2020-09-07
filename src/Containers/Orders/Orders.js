@@ -1,28 +1,37 @@
 import React from 'react';
-import AxiosInstance from '../../AxiosInstance';
+import { fetchOrders } from '../../Store/Actions/OrderActions';
+import { connect } from 'react-redux';
+import Order from './Order/Order';
+import classes from './Orders.module.css'
 
 class Orders extends React.Component{
 
-    state={
-        orders: []
-    }
-
     componentDidMount(){
-        AxiosInstance.get('users/123123/orders')
-            .then(response => {
-                this.setState({orders: response.data});
-                console.log(this.state.orders);
-            });
-
+        this.props.fetchOrders();
     }
 
 
     render(){
-        // console.log(this.state.orders)
         return(
-            <h1 style={{marginTop: '100px'}}>Orders Page</h1>
+            <div className={classes.Orders}>
+                {this.props.orders.map(order =>
+                    <Order order={order} key={order.id}/>
+                )}
+            </div>
         );
     }
 }
 
-export default Orders;
+const stateToProps = state => {
+    return{
+        orders: state.orderReducer.orders
+    }
+}
+
+const dispatchToProps = dispatch => {
+    return{
+        fetchOrders: () => dispatch(fetchOrders())
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(Orders);

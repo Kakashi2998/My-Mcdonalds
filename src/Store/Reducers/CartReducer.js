@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DELETE_FROM_CART } from "./Actions";
+import { ADD_TO_CART, DELETE_FROM_CART } from "../Actions/CartActions";
 
 const initState = {
     cart: [],
@@ -23,10 +23,11 @@ const CartReducer = (state = initState, action) => {
             let newCart = state.cart.filter(burger => burger.id !== action.id);
             newCart.forEach(burger => totalPrice += burger.price);
             return{
-            ...state,
-            cart: newCart,
-            totalPrice: totalPrice
-        }}
+                ...state,
+                cart: newCart,
+                totalPrice: totalPrice
+            }
+        }
         default: return state; 
     }
 }

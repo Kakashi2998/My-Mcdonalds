@@ -5,23 +5,23 @@ import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
 import { Button, Drawer, Modal } from '@material-ui/core';
 import classes from './BurgerBuilder.module.css'
 import { connect } from 'react-redux';
-import { ADD_TO_CART } from '../../Store/Actions';
+import { addToCart } from '../../Store/Actions/CartActions';
 
 class BurgerBuilder extends React.Component{
 
     state = {
         ingredients:  
         [
-            {id: 1, type: 'Salad', qty: 0, price: 35},
-            {id: 2, type: 'Sauce', qty: 0, price: 42},
-            {id: 3, type: 'Mayonaise', qty: 0, price: 35},
-            {id: 4, type: 'Cheese', qty: 0, price: 40},
-            {id: 5, type: 'Onions', qty: 0, price: 35},
-            {id: 6, type: 'Tomatoes', qty: 0, price: 35},
-            {id: 7, type: 'Mushrooms', qty: 0, price: 35},
-            {id: 8, type: 'Egg', qty: 0, price: 35},
-            {id: 9, type: 'Aloo-Tikki', qty: 0, price: 35},
-            {id: 10, type: 'Chicken', qty: 0, price: 60},
+            {id: 1, type: 'Salad', value: 'salad', qty: 0, price: 35},
+            {id: 2, type: 'Sauce', value: 'sauce', qty: 0, price: 42},
+            {id: 3, type: 'Mayonaise', value: 'mayonaise', qty: 0, price: 35},
+            {id: 4, type: 'Cheese', value: 'cheese', qty: 0, price: 40},
+            {id: 5, type: 'Onions', value: 'onions', qty: 0, price: 35},
+            {id: 6, type: 'Tomatoes', value: 'tomatoes', qty: 0, price: 35},
+            {id: 7, type: 'Mushrooms', value: 'mushrooms', qty: 0, price: 35},
+            {id: 8, type: 'Egg', value: 'egg', qty: 0, price: 35},
+            {id: 9, type: 'Aloo-Tikki', value: 'alootikki', qty: 0, price: 35},
+            {id: 10, type: 'Chicken', value: 'chicken', qty: 0, price: 60},
 
         ],
         burgerName: "New Burger",
@@ -85,7 +85,11 @@ class BurgerBuilder extends React.Component{
     }
 
     addToCart = () => {
-        this.props.addToCart(this.state.burgerName, this.state.ingredients, this.state.price);
+        const ingredients = [];
+        this.state.ingredients.map(ingredient => 
+            ingredients.push({[ingredient.value]: ingredient.qty})
+        )
+        this.props.addToCart(this.state.burgerName, ingredients, this.state.price);
         this.props.history.push('/cart');
     }
 
@@ -108,7 +112,6 @@ class BurgerBuilder extends React.Component{
                     price={this.state.price} isOrderable = {this.state.isOrderable}
                     addToOrders={this.toggleModal}/>
                 </Drawer>
-               
                     <Modal open={this.state.showModal} onClose={this.toggleModal} >
                         <React.Fragment>
                             <BurgerSummary ingredients={this.state.ingredients}
@@ -130,8 +133,7 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
     return{
-        addToCart: (name, ingredients, price) => dispatch({type: ADD_TO_CART, name: name, ingredients: ingredients,
-            price: price })
+        addToCart: (name, ingredients, price) => dispatch(addToCart(name, ingredients, price))
     }
 }
 

@@ -1,0 +1,32 @@
+.OrderForm{
+    background-color: white;
+    height: 40vh;
+    width: 50vh;
+    margin-top: 20vh;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+@media (min-width: 300px){
+    .OrderForm{
+        margin-left: 2vh;
+    }
+    .form{
+        margin-left: 50px;
+    }
+}
+
+@media (min-width: 600px){
+    .OrderForm{
+        margin-left: 75vh;
+    }
+    .form{
+        margin-left: 120px;
+    }
+}
+
+.form{
+    text-align: center;
+    margin-top: 20px;
+    width: 250px;
+}

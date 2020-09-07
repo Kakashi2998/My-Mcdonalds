@@ -12,7 +12,6 @@ import mayo from '../../../Assets/Images/Ingredients-images/mayo.jpg';
 import onions from '../../../Assets/Images/Ingredients-images/onions.jpg';
 import tomatoes from '../../../Assets/Images/Ingredients-images/tomatoes.jpg';
 import mushrooms from '../../../Assets/Images/Ingredients-images/mushrooms.jpg';
-import classes from './BurgerIngredent.module.css';
 
 
 const BurgerIngredient = props => {

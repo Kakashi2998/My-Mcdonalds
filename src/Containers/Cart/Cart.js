@@ -1,14 +1,59 @@
 import React from 'react';
 import CartItem from './CartItem/CartItem';
-import { Button } from '@material-ui/core';
+import { Button, Modal } from '@material-ui/core';
 import classes from './Cart.module.css';
 import { connect } from 'react-redux';
+import OrderForm from '../../Components/OrderForm/OrderForm';
+import { placeOrder } from '../../Store/Actions/OrderActions';
 
 class Cart extends React.Component{
 
+    state={
+        isModalOpen: false,
+        phoneNo: '',
+        address: '',
+        invalidPhoneNo: false,
+        invalidAddress: false
+    }
+
+    changePhoneNo = event => {
+        const phoneNo = event.target.value;
+        if(phoneNo.length === 10 && phoneNo.charAt(0) === '8' | '9' | '7' && !phoneNo.includes('e')){
+            this.setState({invalidPhoneNo: false});
+        }else{
+            this.setState({invalidPhoneNo: true})
+        }
+        this.setState({phoneNo: phoneNo});
+    }
+
+    changeAddress = event => {
+        const address = event.target.value;
+        if(address.length === 0){
+            this.setState({invalidAddress: true});
+        }else{
+            this.setState({invalidAddress :false});
+        }
+        this.setState({address: address});
+    }
+
+    toggleModal = () => {
+        this.setState(prevState => ({isModalOpen: !prevState.isModalOpen}));
+    }
+
+    order = () => {
+        console.log('order sent');
+        this.props.placeOrder(this.state.address, this.props.totalPrice, this.props.cart);
+    }
     render(){
         return (
             <div className={classes.Cart}>
+                <Modal open={this.state.isModalOpen} onClose={this.toggleModal} >
+                    <React.Fragment>
+                        <OrderForm changePhoneNo={this.changePhoneNo} invalidPhoneNo={this.state.invalidPhoneNo}
+                            changeAddress={this.changeAddress} invalidAddress={this.state.invalidAddress}
+                            phoneNo={this.state.phoneNo} address={this.state.address} order={this.order}/>
+                    </React.Fragment>
+                </Modal>
                 {this.props.cart.map(burger => 
                     <CartItem burger={burger} key={burger.id}/>)
                 }
@@ -17,67 +62,26 @@ class Cart extends React.Component{
                     variant='contained' color='primary'>
                     Add Burger
                 </Button>
-                <Button variant='contained' color='default' style={{backgroundColor: 'green', color: 'white'}}>
+                <Button variant='contained' color='default' style={{backgroundColor: 'green', color: 'white'}}
+                    onClick={this.toggleModal}>
                     Order
                 </Button> 
             </div>
         );
     }
-
-    // order = () => {
-    //     if(this.state.loading){
-    //         return;
-    //     }
-    //     this.setState({loading: true})
-    //     const date = new Date();
-    //     const order = {
-    //         address: "C-210, Arun Patios",
-    //         orderDate: date.toISOString(),
-    //         totalPrice: this.state.price,
-    //         delivered: 0,
-    //         orderedBurgers: [
-    //             {
-    //                 name: this.state.burgerName,
-    //                 salad: this.state.ingredients[0].qty,
-    //                 cheese: this.state.ingredients[1].qty,
-    //                 sauce: this.state.ingredients[2].qty,
-    //                 chicken: this.state.ingredients[3].qty,
-    //                 alootikki: this.state.ingredients[4].qty,
-    //                 price: this.state.price
-    //             }
-    //         ]
-    //     }
-    //     AxiosInstance.post("orders/123123/order", order)
-    //         .then(response => {
-    //             this.setState({
-    //                 ingredients:  
-    //                 [
-    //                     {id: 1, type: 'Salad', qty: 0, price: 35},
-    //                     {id: 2, type: 'Sauce', qty: 0, price: 42},
-    //                     {id: 3, type: 'Cheese', qty: 0, price: 40},
-    //                     {id: 4, type: 'Chicken', qty: 0, price: 60},
-    //                     {id: 5, type: 'Aloo-Tikki', qty: 0, price: 35}
-    //                 ],
-    //                 burgerName: "New Burger",
-    //                 price: 30,
-    //                 isOrderable: false,
-    //                 showModal: false,
-    //                 loading: false
-    //             })
-    //             setTimeout(() => alert("Ordered Successfully!"), 500);
-    //         }, error => {
-    //             alert("Network Error")
-    //             this.setState({loading: false})
-    //         });
-    // }
-
 }
 
 const stateToProps = state => {
     return{
-        cart: state.cart,
-        totalPrice: state.totalPrice
+        cart: state.cartReducer.cart,
+        totalPrice: state.cartReducer.totalPrice
     }
 }
 
-export default connect(stateToProps)(Cart);
+const dispatchToProps = dispatch => {
+    return{
+        placeOrder: (address, totalPrice, burgers) => dispatch(placeOrder(address, totalPrice, burgers))
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(Cart);

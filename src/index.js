@@ -4,11 +4,20 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import cartReducer from './Store/CartReducer';
+import thunk from 'redux-thunk';
+import CartReducer from './Store/Reducers/CartReducer';
+import OrderReducer from './Store/Reducers/OrderReducer';
 
-const store = createStore(cartReducer);
+const combinedReducers = combineReducers({
+  cartReducer: CartReducer,
+  orderReducer: OrderReducer
+})
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(combinedReducers, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>
