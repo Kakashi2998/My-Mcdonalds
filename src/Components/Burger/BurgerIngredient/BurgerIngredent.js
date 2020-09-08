@@ -27,12 +27,12 @@ const BurgerIngredient = props => {
                     <img src={breadTop} alt='not found'/>
                 </div>
         );
-        case('Chicken'):return(
+        case('Chicken Tikki'):return(
             <div>
                 <img src={chicken} alt='not found' />
             </div>
         );
-        case('Aloo-Tikki'):return(
+        case('Aloo Tikki'):return(
             <div >
                 <img src={alooTikki} alt='not found'/>
             </div>

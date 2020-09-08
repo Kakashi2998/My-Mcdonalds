@@ -9,7 +9,7 @@ const OrderForm = props => {
         <div className={classes.form}>
             <TextField type='number' id="standard-basic" label="Phone No." required fullWidth
                 error={props.invalidPhoneNo} onChange={props.changePhoneNo} onFocus={props.changePhoneNo}
-                value={props.phoneNo}/><br/><br/>
+                value={props.phoneNo} autoFocus/><br/><br/>
             <TextField id="standard-multiline-flexible" multiline label="Address" 
                     rowsMax={4} required fullWidth error={props.invalidAddress} onChange={props.changeAddress}
                      onFocus={props.changeAddress} value={props.address}/><br/><br/>

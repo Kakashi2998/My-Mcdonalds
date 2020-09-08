@@ -9,10 +9,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import CartReducer from './Store/Reducers/CartReducer';
 import OrderReducer from './Store/Reducers/OrderReducer';
+import BurgerReducer from './Store/Reducers/BurgerReducer';
 
 const combinedReducers = combineReducers({
   cartReducer: CartReducer,
-  orderReducer: OrderReducer
+  orderReducer: OrderReducer,
+  burgerReducer: BurgerReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

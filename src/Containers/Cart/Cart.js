@@ -5,6 +5,7 @@ import classes from './Cart.module.css';
 import { connect } from 'react-redux';
 import OrderForm from '../../Components/OrderForm/OrderForm';
 import { placeOrder } from '../../Store/Actions/OrderActions';
+import { clearIngredients } from '../../Store/Actions/BurgerActions';
 
 class Cart extends React.Component{
 
@@ -18,7 +19,8 @@ class Cart extends React.Component{
 
     changePhoneNo = event => {
         const phoneNo = event.target.value;
-        if(phoneNo.length === 10 && phoneNo.charAt(0) === '8' | '9' | '7' && !phoneNo.includes('e')){
+        if(phoneNo.length === 10 && (phoneNo.charAt(0) === '7' || phoneNo.charAt(0) === '8' || phoneNo.charAt(0) === '9')
+             && !phoneNo.includes('e')){
             this.setState({invalidPhoneNo: false});
         }else{
             this.setState({invalidPhoneNo: true})
@@ -37,12 +39,24 @@ class Cart extends React.Component{
     }
 
     toggleModal = () => {
+        if(this.props.cart.length === 0){
+            window.alert('Please add some burgers first');
+            return;
+        }
         this.setState(prevState => ({isModalOpen: !prevState.isModalOpen}));
     }
 
     order = () => {
-        console.log('order sent');
+        if(this.state.invalidAddress || this.state.invalidPhoneNo){
+            return;
+        }
         this.props.placeOrder(this.state.address, this.props.totalPrice, this.props.cart);
+        this.props.history.push('/orders');
+    }
+
+    newBurger = () => {
+        this.props.clearIngredients();
+        this.props.history.push('/burgerBuilder');
     }
     render(){
         return (
@@ -54,14 +68,18 @@ class Cart extends React.Component{
                             phoneNo={this.state.phoneNo} address={this.state.address} order={this.order}/>
                     </React.Fragment>
                 </Modal>
-                {this.props.cart.map(burger => 
-                    <CartItem burger={burger} key={burger.id}/>)
-                }
+                <div className={classes.cartItems}>
+                    {this.props.cart.map(burger => 
+                        <CartItem burger={burger} key={burger.id} {...this.props}/>)
+                    }
+                </div>
+                <hr/>
                 <h2>Total Price: Rs{this.props.totalPrice}</h2>
-                <Button onClick={() => this.props.history.push('/burgerBuilder')}
+                <Button onClick={this.newBurger}
                     variant='contained' color='primary'>
                     Add Burger
                 </Button>
+                &nbsp;&nbsp;
                 <Button variant='contained' color='default' style={{backgroundColor: 'green', color: 'white'}}
                     onClick={this.toggleModal}>
                     Order
@@ -80,7 +98,8 @@ const stateToProps = state => {
 
 const dispatchToProps = dispatch => {
     return{
-        placeOrder: (address, totalPrice, burgers) => dispatch(placeOrder(address, totalPrice, burgers))
+        placeOrder: (address, totalPrice, burgers) => dispatch(placeOrder(address, totalPrice, burgers)),
+        clearIngredients: () => dispatch(clearIngredients())
     }
 }
 

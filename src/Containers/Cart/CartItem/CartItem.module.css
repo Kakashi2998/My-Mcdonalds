@@ -1,7 +1,10 @@
 .card{
-    max-width: 300px;
+    width: 300px;
     margin-top: 25px;
-    margin-bottom: 35px;
+    height: 350px;
+}
+.cardActions{
+    margin-left: 23%;
 }
 
 @media (min-width: 300px){
@@ -12,6 +15,6 @@
 
 @media (min-width: 600px){
     .card{
-        margin-left: 40%;
+        margin-left: 43%;
     }
 }

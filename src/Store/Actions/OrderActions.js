@@ -1,4 +1,5 @@
 import AxiosInstance from "../../AxiosInstance";
+import { clearCart } from "./CartActions";
 
 export const FETCH_ORDERS = 'FETCH_ORDERS';
 export const PLACE_ORDER = 'PLACE_ORDER';
@@ -7,7 +8,6 @@ export const STORE_ORDERS = 'STORE_ORDERS';
 export const fetchOrders = () => {
     return dispatch => {
         AxiosInstance.get('users/123123/orders').then(response =>{
-            console.log(response);
             dispatch(storeOrders(response.data.reverse()));
         },
         error => {
@@ -33,7 +33,7 @@ export const placeOrder = (address, totalPrice, burgers) => {
             burger.ingredients.map(ingredient => {
                 ingredients = {
                     ...ingredients,
-                    [Object.keys(ingredient)]: Object.values(ingredient)[0]
+                    [ingredient.value]: ingredient.qty
                 }
                 return ingredient;
             })
@@ -54,6 +54,7 @@ export const placeOrder = (address, totalPrice, burgers) => {
         AxiosInstance.post("orders/123123/order", order)
             .then(response => {
                 console.log(response);
+                dispatch(clearCart());
                 // dispatch(fetchOrders());
             })
     }
