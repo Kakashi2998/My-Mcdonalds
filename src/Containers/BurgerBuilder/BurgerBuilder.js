@@ -2,12 +2,11 @@ import React from 'react';
 import Burger from '../../Components/Burger/Burger';
 import BuildControls from '../../Components/Burger/BuildControls/BuildControls';
 import BurgerSummary from '../../Components/Burger/BurgerSummary/BurgerSummary';
-import { Button, Drawer, Modal, CircularProgress } from '@material-ui/core';
+import { Button, Drawer, Modal } from '@material-ui/core';
 import classes from './BurgerBuilder.module.css'
 import { connect } from 'react-redux';
 import { addToCart } from '../../Store/Actions/CartActions';
-import AxiosInstance from '../../AxiosInstance';
-import { addIngredient, removeIngredient, fetchIngredients, changeName } from '../../Store/Actions/BurgerActions';
+import { addIngredient, removeIngredient, fetchIngredients, changeName, clearIngredients } from '../../Store/Actions/BurgerActions';
 
 class BurgerBuilder extends React.Component {
 
@@ -16,17 +15,19 @@ class BurgerBuilder extends React.Component {
         showModal: false,
         loading: false,
         bottomDrawer: false,
-        loading: false
     }
 
     componentDidMount = () => {
-        console.log(this.props.ingredients);
         if(this.props.ingredients.length === 0){
             this.props.fetchIngredients();
         }
     }
 
     toggleModal = () => {
+        if(this.props.price === 30){
+            window.alert('No ingredients added');
+            return;
+        }
         this.setState((prevState) => ({ showModal: !prevState.showModal }))
     }
 
@@ -39,32 +40,32 @@ class BurgerBuilder extends React.Component {
     }
 
     addToCart = () => {
+        
         this.props.addToCart(this.props.name, this.props.ingredients, this.props.price);
+        this.props.clearIngredients();
         this.props.history.push('/cart');
     }
 
     render() {
         return (
-            <div style={{ marginTop: '100px' }}>
+            <div style={{ marginTop: '50px' }}>
                 <Burger ingredients={this.props.ingredients}
                     isOrderable={this.state.isOrderable} />
+                    <hr/>
+                    <b>Price: Rs {this.props.price}</b><br/>
                 <Button onClick={this.toggleBottomDrawer} variant='contained' color='primary'
                     style={{ color: 'white', width: '200px' }}>
                     Ingredients
-                </Button><br /><br />
-                <button className={classes.OrderButton} disabled={!this.state.isOrderable}
-                    onClick={this.toggleModal}>
+                </Button><br />
+                <Button variant='contained' color='default' style={{backgroundColor: 'green', color: 'white', marginTop: '10px'}} disabled={!this.state.isOrderable}
+                    onClick={this.toggleModal} className={classes.addToCart}>
                     Add to Cart
-                </button>
+                </Button>
                 <Drawer anchor='bottom' open={this.state.bottomDrawer} onClose={this.toggleBottomDrawer} BackdropProps={{ invisible: true }}>
-                    {this.state.loading ? <CircularProgress /> :
                         <BuildControls ingredients={this.props.ingredients}
                             addItem={this.props.addIngredient} removeItem={this.props.removeIngredient}
-                            price={this.props.price}
-                            // isOrderable = {this.state.isOrderable}
+                            isOrderable = {this.state.isOrderable}
                             addToOrders={this.toggleModal} />
-                    }
-
                 </Drawer>
                 <Modal open={this.state.showModal} onClose={this.toggleModal} >
                     <React.Fragment>
@@ -93,7 +94,8 @@ const dispatchToProps = dispatch => {
         addIngredient: (id) => dispatch(addIngredient(id)),
         removeIngredient: (id) => dispatch(removeIngredient(id)),
         fetchIngredients: () => dispatch(fetchIngredients()),
-        changeName: (name) => dispatch(changeName(name))
+        changeName: (name) => dispatch(changeName(name)),
+        clearIngredients: () => dispatch(clearIngredients())
     }
 }
 

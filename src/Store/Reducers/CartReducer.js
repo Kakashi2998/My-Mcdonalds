@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DELETE_FROM_CART, CLEAR_CART } from "../Actions/CartActions";
+import { ADD_TO_CART, DELETE_FROM_CART, CLEAR_CART, SET_CART_STATE } from "../Actions/CartActions";
 
 const initState = {
     cart: [],
@@ -30,6 +30,9 @@ const CartReducer = (state = initState, action) => {
         }
         case CLEAR_CART: return{
             ...initState
+        }
+        case SET_CART_STATE: return{
+            ...action.payload
         }
         default: return state; 
     }

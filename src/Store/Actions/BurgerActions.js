@@ -24,6 +24,10 @@ export const fetchIngredients = () => {
                 tempIngredients.push({...ingredient, qty: 0})
             );
             dispatch(setIngredients(tempIngredients, 'New Burger', 30));
+        },
+        error => {
+            window.alert('Network error');
+            console.log(error);
         })
 
     }

@@ -26,7 +26,7 @@ const CartItem = props => {
                     <Typography className={classes.pos} color="textSecondary">
                     {props.burger.ingredients.filter(ingredient => ingredient.qty > 0)
                         .map(ingredient => 
-                        <li key={ingredient.id}>
+                        <li key={ingredient.id} style={{textAlign: 'left'}} className={classes.cardActions}>
                             <b>{ingredient.qty} {ingredient.type},</b>
                         </li>
                     )}
@@ -38,12 +38,11 @@ const CartItem = props => {
                 <CardActions>
                     <div className={classes.cardActions}>
                         <Button variant='contained' color='primary'
-                            className={classes.button} onClick={editBurger}>
+                            onClick={editBurger}>
                                 Edit
                         </Button>
                         &nbsp;&nbsp;
-                        <Button variant='contained' color='secondary' onClick={deleteBurger} 
-                            className={classes.button}>
+                        <Button variant='contained' color='secondary' onClick={deleteBurger}>
                             Delete
                         </Button>
                     </div>

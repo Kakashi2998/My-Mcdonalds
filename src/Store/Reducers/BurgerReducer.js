@@ -30,13 +30,16 @@ const BurgerReducer = (state = intiState, action) => {
         }
         case REMOVE_INGREDIENT: {
             let tempIngredients = [...state.ingredients];
-            let tempPrice = 30;
+            let tempPrice = state.price;
             const index = tempIngredients
                 .findIndex(ingredient => ingredient.id === action.id);
-            tempIngredients[index].qty--;
-            tempIngredients.forEach(ingredient => {
+            if(tempIngredients[index].qty !== 0){ 
+                tempIngredients[index].qty--;
+                tempPrice = 30;
+                tempIngredients.forEach(ingredient => {
                 tempPrice += ingredient.qty * ingredient.price;
-            })
+                })
+            }
             return{
                 ...state,
                 ingredients: tempIngredients,

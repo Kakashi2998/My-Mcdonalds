@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import classes from './AppToolbar.module.css'
 import MenuIcon from '@material-ui/icons/Menu';
 import BurgerLogo from '../../Assets/Images/burger-logo.png'
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 const AppToolbar = props => {
@@ -21,11 +23,19 @@ const AppToolbar = props => {
             <img src={BurgerLogo} style={{height: '50px', width: '50px'}} alt='not found'/>
               Burger Builder
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Link to='/auth' style={{textDecoration: 'none', color: 'white'}}>
+            <Button color="inherit">{props.name}</Button>
+          </Link>
         </Toolbar>
       </AppBar>
         
     );
 }
 
-export default AppToolbar;
+const stateToProps = state => {
+  return{
+      name: state.authReducer.name
+  }
+}
+
+export default connect(stateToProps)(AppToolbar);

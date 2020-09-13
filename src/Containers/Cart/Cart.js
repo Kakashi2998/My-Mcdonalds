@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import OrderForm from '../../Components/OrderForm/OrderForm';
 import { placeOrder } from '../../Store/Actions/OrderActions';
 import { clearIngredients } from '../../Store/Actions/BurgerActions';
+import history from '../../history';
 
 class Cart extends React.Component{
 
@@ -43,6 +44,10 @@ class Cart extends React.Component{
             window.alert('Please add some burgers first');
             return;
         }
+        if(!this.props.authenticated){
+            history.push('/auth');
+            return;
+        }
         this.setState(prevState => ({isModalOpen: !prevState.isModalOpen}));
     }
 
@@ -50,8 +55,7 @@ class Cart extends React.Component{
         if(this.state.invalidAddress || this.state.invalidPhoneNo){
             return;
         }
-        this.props.placeOrder(this.state.address, this.props.totalPrice, this.props.cart);
-        this.props.history.push('/orders');
+        this.props.placeOrder(this.state.address, this.props.totalPrice, this.props.cart, this.props.history);
     }
 
     newBurger = () => {
@@ -92,7 +96,8 @@ class Cart extends React.Component{
 const stateToProps = state => {
     return{
         cart: state.cartReducer.cart,
-        totalPrice: state.cartReducer.totalPrice
+        totalPrice: state.cartReducer.totalPrice,
+        authenticated: state.authReducer.authenticated
     }
 }
 

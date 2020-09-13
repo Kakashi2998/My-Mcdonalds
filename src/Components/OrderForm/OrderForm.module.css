@@ -1,32 +1,39 @@
 .OrderForm{
     background-color: white;
     height: 40vh;
-    width: 50vh;
     margin-top: 20vh;
     align-items: center;
     border: 1px solid black;
     border-radius: 20px;
 }
+
+.form{
+    text-align: center;
+    margin-top: 10%;
+    width: 60%;
+}
+.spinner{
+    margin-left: 45%;
+    margin-top: 20%;
+}
+
+
 @media (min-width: 300px){
     .OrderForm{
-        margin-left: 2vh;
+        margin-left: 5%;
+        width: 90%;
     }
     .form{
-        margin-left: 50px;
+        margin-left: 20%;
     }
 }
 
 @media (min-width: 600px){
     .OrderForm{
-        margin-left: 75vh;
+        width: 50%;
+        margin-left: 25%;
     }
     .form{
-        margin-left: 120px;
+        margin-left: 20%;
     }
-}
-
-.form{
-    text-align: center;
-    margin-top: 20px;
-    width: 250px;
 }

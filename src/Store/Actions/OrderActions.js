@@ -1,14 +1,20 @@
 import AxiosInstance from "../../AxiosInstance";
 import { clearCart } from "./CartActions";
+import history from "../../history";
+
 
 export const FETCH_ORDERS = 'FETCH_ORDERS';
 export const PLACE_ORDER = 'PLACE_ORDER';
 export const STORE_ORDERS = 'STORE_ORDERS';
+export const CLEAR_ORDERS = 'CLEAR_ORDERS';
 
 export const fetchOrders = () => {
-    return dispatch => {
-        AxiosInstance.get('users/123123/orders').then(response =>{
-            dispatch(storeOrders(response.data.reverse()));
+    return (dispatch, getState) => {
+        AxiosInstance.get('orders/get', {headers: {
+            Method: getState().authReducer.method,
+            Authorization: "Bearer " + getState().authReducer.token}})
+        .then(response =>{
+            dispatch(storeOrders(response.data));
         },
         error => {
             window.alert('Network Error');
@@ -24,8 +30,14 @@ export const storeOrders = (orders) => {
     }
 }
 
+export const clearOrders = () => {
+    return{
+        type: CLEAR_ORDERS
+    }
+}
+
 export const placeOrder = (address, totalPrice, burgers) => {
-    return dispatch => {
+    return (dispatch, getState) => {
         const date = new Date();
         const orderedBurgers = [];
         burgers.map(burger => {
@@ -51,11 +63,16 @@ export const placeOrder = (address, totalPrice, burgers) => {
             delivered: 0,
             orderedBurgers: orderedBurgers
         }
-        AxiosInstance.post("orders/123123/order", order)
+        AxiosInstance.post("orders/post", order, 
+            {headers: {Method: getState().authReducer.method,
+                    Authorization: "Bearer " + getState().authReducer.token}})
             .then(response => {
-                console.log(response);
                 dispatch(clearCart());
-                // dispatch(fetchOrders());
+                history.push('/orders');
+            },
+            error => {
+                window.alert('Network error');
+                console.log(error);
             })
     }
 }

@@ -1,20 +1,23 @@
-.card{
-    width: 300px;
-    margin-top: 25px;
-    height: 350px;
-}
-.cardActions{
-    margin-left: 23%;
-}
-
 @media (min-width: 300px){
     .card{
+        width: 80%;
         margin-left: 10%;
+        margin-bottom: 5%;
+        margin-top: 5%;
+    }
+    .cardActions{
+        margin-left: 25%;
     }
 }
 
 @media (min-width: 600px){
     .card{
-        margin-left: 43%;
+        width: 50%;
+        margin-left: 25%;
+        margin-bottom: 2%;
+        margin-top: 2%;
+    }
+    .cardActions{
+        margin-left: 40%;
     }
 }
