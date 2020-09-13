@@ -4,7 +4,6 @@ import GoogleLogin from 'react-google-login';
 import { logout, register } from '../../Store/Actions/AuthActions';
 import { connect } from 'react-redux';
 import { Button, CircularProgress } from '@material-ui/core';
-// import { FacebookLogin } from 'react-facebook-login-component';
 
 const Auth = props => {
 

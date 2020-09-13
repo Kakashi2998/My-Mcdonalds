@@ -18,6 +18,12 @@ class Cart extends React.Component{
         invalidAddress: false
     }
 
+    componentDidMount = () => {
+        if(!this.props.authenticated){
+            history.push('/auth');
+        }
+    }
+
     changePhoneNo = event => {
         const phoneNo = event.target.value;
         if(phoneNo.length === 10 && (phoneNo.charAt(0) === '7' || phoneNo.charAt(0) === '8' || phoneNo.charAt(0) === '9')
@@ -42,10 +48,6 @@ class Cart extends React.Component{
     toggleModal = () => {
         if(this.props.cart.length === 0){
             window.alert('Please add some burgers first');
-            return;
-        }
-        if(!this.props.authenticated){
-            history.push('/auth');
             return;
         }
         this.setState(prevState => ({isModalOpen: !prevState.isModalOpen}));
@@ -73,9 +75,10 @@ class Cart extends React.Component{
                     </React.Fragment>
                 </Modal>
                 <div className={classes.cartItems}>
-                    {this.props.cart.map(burger => 
-                        <CartItem burger={burger} key={burger.id} {...this.props}/>)
-                    }
+                    {this.props.cart.length === 0? <h3>No burgers in the cart</h3>:
+                        this.props.cart.map(burger => 
+                            <CartItem burger={burger} key={burger.id} {...this.props}/>)
+                }
                 </div>
                 <hr/>
                 <h2>Total Price: Rs{this.props.totalPrice}</h2>

@@ -7,6 +7,7 @@ import classes from './BurgerBuilder.module.css'
 import { connect } from 'react-redux';
 import { addToCart } from '../../Store/Actions/CartActions';
 import { addIngredient, removeIngredient, fetchIngredients, changeName, clearIngredients } from '../../Store/Actions/BurgerActions';
+import history from '../../history';
 
 class BurgerBuilder extends React.Component {
 
@@ -26,6 +27,10 @@ class BurgerBuilder extends React.Component {
     toggleModal = () => {
         if(this.props.price === 30){
             window.alert('No ingredients added');
+            return;
+        }
+        if(!this.props.authenticated){
+            history.push('/auth');
             return;
         }
         this.setState((prevState) => ({ showModal: !prevState.showModal }))
@@ -84,7 +89,8 @@ const stateToProps = state => {
     return {
         ingredients: state.burgerReducer.ingredients,
         name: state.burgerReducer.name,
-        price: state.burgerReducer.price
+        price: state.burgerReducer.price,
+        authenticated: state.authReducer.authenticated
     }
 }
 

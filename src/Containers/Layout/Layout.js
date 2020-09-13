@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './Layout.module.css'
 import Toolbar from '../../Components/AppToolbar/AppToolbar';
 import AppDrawer from '../../Components/AppDrawer/AppDrawer';
 
@@ -12,11 +11,11 @@ const Layout = props => {
     }
 
     return (
-        <div className={classes.Layout}>
+        <React.Fragment>
             <Toolbar toggleDrawer={toggleDrawer}/>
             <AppDrawer showDrawer={showDrawer} toggleDrawer={toggleDrawer}/>
             <main>{props.children}</main>
-        </div>
+        </React.Fragment>
     );
 }
 
