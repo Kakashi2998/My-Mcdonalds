@@ -6,6 +6,12 @@ const BurgerSummary = props => {
 
     let items = null;
 
+    const onEnter = event => {
+        if(event.key === 'Enter'){
+            event.target.blur();
+        }
+    }
+
     items = props.ingredients.filter(i => i.qty > 0)
         .map(ingredient => {
             return (
@@ -21,7 +27,7 @@ const BurgerSummary = props => {
         <div className={classes.Summary}>
             <TextField id="outlined-basic" label="Burger Name" variant="outlined"
                 onChange={props.setBurgerName} required onFocus={(event) => event.target.select()}
-                value={props.burgerName} autoFocus />
+                value={props.burgerName} autoFocus onKeyPress={onEnter} />
             <h1>Add burger to Orders?</h1>
             <ul>{items}</ul>
             <h2>Total price: Rs.{props.price}</h2>
